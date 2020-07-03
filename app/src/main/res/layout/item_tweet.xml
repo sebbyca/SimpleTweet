@@ -61,6 +61,84 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="2dp"
         android:layout_toEndOf="@+id/ivProfileImage"
+        android:autoLink="all"
+        android:linksClickable="true"
         tools:text="This is my sample tweet! :D" />
+
+    <ImageView
+        android:id="@+id/ivMedia"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/tvBody"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:scaleType="centerCrop"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageButton
+        android:id="@+id/btnReply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivMedia"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:backgroundTint="@android:color/transparent"
+        android:tint="@color/inline_action"
+        app:srcCompat="@drawable/ic_vector_reply" />
+
+    <ImageButton
+        android:id="@+id/btnRetweet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivMedia"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/btnReply"
+        android:backgroundTint="@android:color/transparent"
+        android:tint="@color/retweet_colors"
+        app:srcCompat="@drawable/ic_retweet_twitter" />
+
+    <ImageButton
+        android:id="@+id/btnHeart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivMedia"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/retweetCount"
+        android:backgroundTint="@android:color/transparent"
+        android:tint="@color/heart_colors"
+        app:srcCompat="@drawable/ic_heart_twitter" />
+
+    <TextView
+        android:id="@+id/retweetCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivMedia"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="11dp"
+        android:layout_toEndOf="@+id/btnRetweet"
+        tools:text="32" />
+
+    <TextView
+        android:id="@+id/heartCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivMedia"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="11dp"
+        android:layout_toEndOf="@+id/btnHeart"
+        tools:text="54" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/btnRetweet"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="-2dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/inline_action" />
 
 </RelativeLayout>

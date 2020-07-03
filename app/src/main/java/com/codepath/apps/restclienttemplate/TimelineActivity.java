@@ -8,15 +8,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,13 +27,16 @@ import okhttp3.Headers;
 public class TimelineActivity extends AppCompatActivity {
 
     public static final String TAG = "TimelineActivity";
-    private static final int REQUEST_CODE = 20;
+    private static final int REQUEST_CODE_TWEET = 20;
+    private static final int REQUEST_CODE_REPLY = 25;
 
     TwitterClient client;
-    RecyclerView rvTweets;
-    List<Tweet> tweets;
     TweetsAdapter adapter;
+    List<Tweet> tweets;
+
     SwipeRefreshLayout swipeContainer;
+    RecyclerView rvTweets;
+    FloatingActionButton fabCompose;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,30 +69,21 @@ public class TimelineActivity extends AppCompatActivity {
         rvTweets.setLayoutManager(new LinearLayoutManager(this));
         rvTweets.setAdapter(adapter);
         populateHomeTimeline();
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.compose) {
-            // Compose item has been selected
-            // Navigate to the compose activity
-            Intent i = new Intent(this, ComposeActivity.class);
-            startActivityForResult(i, REQUEST_CODE);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        fabCompose = findViewById(R.id.fabCompose);
+        fabCompose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
+                i.putExtra("requestCode", Parcels.wrap(REQUEST_CODE_TWEET));
+                startActivityForResult(i, REQUEST_CODE_TWEET);
+            }
+        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+        if ((requestCode == REQUEST_CODE_TWEET || requestCode == REQUEST_CODE_REPLY) && resultCode == RESULT_OK) {
             // Get data from the intent (tweet)
             Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
 

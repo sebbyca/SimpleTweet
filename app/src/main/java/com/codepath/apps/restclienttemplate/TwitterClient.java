@@ -61,6 +61,47 @@ public class TwitterClient extends OAuthBaseClient {
 		client.post(apiUrl, params, "", handler);
 	}
 
+	public void replyTweet(String tweetContent, long tweet_id,  JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/update.json");
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		params.put("status", tweetContent);
+		params.put("in_reply_to_status_id", tweet_id);
+		client.post(apiUrl, params, "", handler);
+	}
+
+	public void heartTweet(long tweet_id, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("favorites/create.json");
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		params.put("id", tweet_id);
+		client.post(apiUrl, params, "", handler);
+	}
+
+	public void unheartTweet(long tweet_id, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("favorites/destroy.json");
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		params.put("id", tweet_id);
+		client.post(apiUrl, params, "", handler);
+	}
+
+	public void retweetTweet(long tweet_id, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl(String.format("statuses/retweet/%s.json", tweet_id));
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		params.put("id", tweet_id);
+		client.post(apiUrl, params, "", handler);
+	}
+
+	public void unretweetTweet(long tweet_id, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl(String.format("statuses/unretweet/%s.json", tweet_id));
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		params.put("id", tweet_id);
+		client.post(apiUrl, params, "", handler);
+	}
+
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
 	 * 	  i.e getApiUrl("statuses/home_timeline.json");
 	 * 2. Define the parameters to pass to the request (query or body)
